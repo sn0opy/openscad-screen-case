@@ -1,4 +1,3 @@
-
 use <libs/cubeX.scad>
 use <gadgets.scad>
 
@@ -24,10 +23,8 @@ AA_WIDTH = 97.92;
 // Active Area is not centered
 // 1.2 + 1.5 + 0.8: see specification "1.4 Mechanical Drawing of EPD module"
 AA_BORDER_OFFSET = 1.2 + 1.5 + 0.8;
-/*  END e-Paper defintion
- */
 
-BORDER_HORIZONTAL = 10;
+BORDER_HORIZONTAL = 6;
 BORDER_VERTICAL = 14;
 
 LENGTH = AA_LENGTH + BORDER_HORIZONTAL * 2;
@@ -40,7 +37,7 @@ CASE_THICKNESS = 1.;
 CASE_WALL_THICKNESS = 9;
 
 // Must be less than or equal to front thickness
-BORDER_RADIUS = 3;
+BORDER_RADIUS = 2;
 
 // Dept
 DISPLAY_DEPTH = 2;
@@ -75,9 +72,6 @@ module dummy_screen(length, width, thickness, active_area_length, active_area_wi
 }
 
 module frame(active_area_length, active_area_width, front_thickness, display_depth) {
-    // Frame opening
-    opening = 6;
-
     // Height of the closest part of the active area
     base = 1;
 
@@ -89,23 +83,17 @@ module frame(active_area_length, active_area_width, front_thickness, display_dep
         translate([0, 0, base]) {
             cube(size=[AA_LENGTH + clearance, AA_WIDTH + clearance, .01], center=true);
         }
-        translate([0, 0, DISPLAY_DEPTH]) {
-            cube(size=[AA_LENGTH + opening, AA_WIDTH + opening, .01], center=true);
-        }
+
     }
 }
 
 module holes_position() {
     // Holes
     for (pos = [
-        [LENGTH / 2 - BORDER_HORIZONTAL / 2 + INSERT_DIAMETER / 2, WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER, 0],
-        [LENGTH / 2 - BORDER_HORIZONTAL / 2 + INSERT_DIAMETER / 2, -(WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER), 0],
-        [-(LENGTH / 2 - BORDER_HORIZONTAL / 2 + INSERT_DIAMETER / 2), WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER, 0],
-        [-(LENGTH / 2 - BORDER_HORIZONTAL / 2 + INSERT_DIAMETER / 2), -(WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER), 0],
-
-        [(LENGTH / 2 - BORDER_HORIZONTAL / 2 + INSERT_DIAMETER / 2), 0, 1],
-        [-(LENGTH / 2 - BORDER_HORIZONTAL / 2 + INSERT_DIAMETER / 2), 0, 1],
-
+        [LENGTH / 2 - BORDER_HORIZONTAL / 2, WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER, 0],
+        [LENGTH / 2 - BORDER_HORIZONTAL / 2, -(WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER), 0],
+        [-(LENGTH / 2 - BORDER_HORIZONTAL / 2), WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER, 0],
+        [-(LENGTH / 2 - BORDER_HORIZONTAL / 2), -(WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER), 0],
         [0, WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER, 1],
         [LENGTH / 4, WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER, 1],
         [-LENGTH / 4, WIDTH / 2 - BORDER_VERTICAL / 2 + INSERT_DIAMETER, 1],
